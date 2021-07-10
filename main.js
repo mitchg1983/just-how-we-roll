@@ -1,6 +1,6 @@
 /**********
- * DATA *
- **********/
+* DATA *
+**********/
 
 const sixes = [];
 const doubleSixes = [];
@@ -8,49 +8,61 @@ const twelves = [];
 const twenties = [];
 
 /********************
- * HELPER FUNCTIONS *
+* HELPER FUNCTIONS *
 ********************/
 
 const getRandomNumber = function(max) {
-    const rand = Math.random();
-    const range = rand * max;
-    const result = Math.ceil(range);
-    return result;
+  const rand = Math.random();
+  const range = rand * max;
+  const result = Math.ceil(range);
+  return result;
 }
 
 const sortByNumber = function(arr) {
   const byNumber = function(item1, item2) {
     return item1 - item2;
   }
-
+  
   return arr.slice().sort(byNumber);
 }
 
 /*******************
- * YOUR CODE BELOW *
- *******************/
+* YOUR CODE BELOW *
+*******************/
+
+function rollSix() {
+  
+  result = getRandomNumber(6);
+  console.log('Your roll of the 6 die is,', result);
 
 
+  
+  
+}
+
+
+
+rollSix();
 
 /*******************
- * EVENT LISTENERS *
- *******************/
+* EVENT LISTENERS *
+*******************/
 
 
 
 
 /******************
- * RESET FUNCTION *
- ******************/
+* RESET FUNCTION *
+******************/
 
 
 
 /****************************
- * CLICK HANDLING FUNCTIONS *
+* CLICK HANDLING FUNCTIONS *
 ****************************/
 
 
 
 /****************
- * MATH SECTION *
- ****************/
+* MATH SECTION *
+****************/
