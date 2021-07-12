@@ -42,3 +42,11 @@
     color: #fff;
     transform: translateY(-7px);
 }
+
+.numberStyle {
+
+    font-size: 18px;
+    font-style: italic;
+    color: #ff0000;
+
+}
