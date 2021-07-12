@@ -246,12 +246,10 @@ function median(arr) {
   const midPoint = Math.floor(length / 2);
 
   //Cases for the first two rolls only.
-  if (length === 1) {
-    return sortedArr[0];
-  }
-
-  if (length === 2) {
-    return ((sortedArr[0] + sortedArr[1]) / 2).toString();
+  if (length <= 2) {
+    return length === 1
+      ? sortedArr[0]
+      : ((sortedArr[0] + sortedArr[1]) / 2).toString();
   }
 
   //Return the median depending on the length of the array; odd or even.
@@ -277,7 +275,8 @@ function mode(modeObj) {
     //Set a variable for whatver the value of the current property is.
     let value = modeObj[prop];
 
-    //Because mode can have multiple potential values, we need to use an array to store the data.
+    //Because mode can have multiple potential values, we need to use an array to store the data. If the current value matches
+    //the current 'highest value' in tempArr (tempValue) this prop is pushed to the array.
     if (value === tempValue) {
       tempArr.push(prop);
     }
@@ -290,6 +289,7 @@ function mode(modeObj) {
       tempArr.push(prop);
     }
 
+    //I'm pretty sure this doesn't actually need to be here, but I'm leaving it in becuase I'm a little stitious.
     if (value < tempValue) {
       continue;
     }
