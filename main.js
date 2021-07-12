@@ -30,7 +30,7 @@ const sortByNumber = function (arr) {
  * YOUR CODE BELOW *
  *******************/
 
-//Declare the dies present on the page
+//Declare the dies present on the index.
 const sixDie = document.querySelector("#d6-roll");
 
 const doubleSixA = document.querySelector("#double-d6-roll-1");
@@ -43,7 +43,7 @@ const twentyDie = document.querySelector("#d20-roll");
 
 const resetButton = document.querySelector("#reset-button");
 
-//Declare our mean, median & mode user outputs
+//Declare our mean, median & mode user outputs.
 const d6Mean = document.querySelector("#d6-rolls-mean");
 const d6Median = document.querySelector("#d6-rolls-median");
 const d6Mode = document.querySelector("#d6-rolls-mode");
@@ -61,57 +61,16 @@ const d20Median = document.querySelector("#d20-rolls-median");
 const d20Mode = document.querySelector("#d20-rolls-mode");
 
 //Declare new objects to help store data for the mode calculation
-const mode6 = {};
+let mode6 = {};
 
-const modeD6 = {
-  1: 0,
-  2: 0,
-  3: 0,
-  4: 0,
-  5: 0,
-  6: 0,
-};
+let modeD6 = {};
 
-const mode12 = {
-  1: 0,
-  2: 0,
-  3: 0,
-  4: 0,
-  5: 0,
-  6: 0,
-  7: 0,
-  8: 0,
-  9: 0,
-  10: 0,
-  11: 0,
-  12: 0,
-};
+let mode12 = {};
 
-const mode20 = {
-  1: 0,
-  2: 0,
-  3: 0,
-  4: 0,
-  5: 0,
-  6: 0,
-  7: 0,
-  8: 0,
-  9: 0,
-  10: 0,
-  11: 0,
-  12: 0,
-  13: 0,
-  14: 0,
-  15: 0,
-  16: 0,
-  17: 0,
-  18: 0,
-  19: 0,
-  20: 0,
-};
+let mode20 = {};
 
 //Set the starting page for the user. Because 'reset' is a function declaration, not an expression,
-//we can use it here, and declare it later.
+//we can use it here but declare it later.
 reset();
 
 /*******************
@@ -135,7 +94,8 @@ resetButton.addEventListener("click", reset);
  ******************/
 
 function reset() {
-  //Splice out the contents of our arrays to reset the data.
+  //Splice out the contents of our arrays to reset the data. Because these arrays were declared as CONST, we cannot just
+  //declare them again ... sixes = [] will NOT work here.
   sixes.splice(0, sixes.length);
 
   doubleSixes.splice(0, doubleSixes.length);
@@ -155,7 +115,7 @@ function reset() {
 
   twentyDie.src = "images/start/d20.jpg";
 
-  //Update the mean, median and mode results.
+  //Reset the mean, median & mode results.
   d6Mean.innerText = "N/A";
   d6Median.innerText = "N/A";
   d6Mode.innerText = "N/A";
@@ -171,6 +131,13 @@ function reset() {
   d20Mean.innerText = "N/A";
   d20Median.innerText = "N/A";
   d20Mode.innerText = "N/A";
+
+  //Reset the objects used to calculate the mode. Because I use LET to delcare these, I do not
+  //need to splice or get fancy here.
+  mode6 = {};
+  modeD6 = {};
+  mode12 = {};
+  mode20 = {};
 }
 
 /****************************
@@ -178,90 +145,83 @@ function reset() {
  ****************************/
 
 function rollSix() {
-  //This section gets the roll, console logs it, and pushes it to our array.
-
+  //This section gets the roll and pushes it to our array.
   result = getRandomNumber(6);
-
   sixes.push(result);
 
   //Change the die image to match the roll.
-
   const newImg = "images/d6/" + result + ".png";
 
   sixDie.src = newImg;
 
+  //This line of code will update our mode object, with the data from this roll.
+  mode6[result] === undefined ? (mode6[result] = 1) : mode6[result]++;
+
   //Update the mean, median & mode results.
   d6Mean.innerText = mean(sixes).toFixed(2);
   d6Median.innerText = median(sixes);
-
-  mode6[result] === undefined ? (mode6[result] = 1) : mode6[result]++;
-
-  //Update the mode result.
   d6Mode.innerText = mode(mode6);
 }
 
 function rollDoubleSix() {
-  //This section gets the roll, console logs it, and pushes it to our array.
-
+  //This section gets the roll and pushes it to our array.
   resultA = getRandomNumber(6);
   resultB = getRandomNumber(6);
-
-  console.log("Your roll of the double 6 die is,", resultA, " ", resultB);
-
   doubleSixes.push(resultA, resultB);
-  console.log(doubleSixes);
 
   //Change the die image to match the roll.
-
   const newImgA = "images/d6/" + resultA + ".png";
   const newImgB = "images/d6/" + resultB + ".png";
 
   doubleSixA.src = newImgA;
   doubleSixB.src = newImgB;
 
+  //This line of code will update our mode object, with the data from this roll.
+  modeD6[resultA] === undefined ? (modeD6[resultA] = 1) : modeD6[resultA]++;
+  modeD6[resultB] === undefined ? (modeD6[resultB] = 1) : modeD6[resultB]++;
+
   //Update the mean, median and mode results.
   double6Mean.innerText = mean(doubleSixes).toFixed(2);
   double6Median.innerText = median(doubleSixes);
+  double6Mode.innerText = mode(modeD6);
 }
 
 function rollTwelve() {
-  //This section gets the roll, console logs it, and pushes it to our array.
-
+  //This section gets the roll and pushes it to our array.
   result = getRandomNumber(12);
-  console.log("Your roll of the 12 die is,", result);
-
   twelves.push(result);
-  console.log(twelves);
 
   //Change the die image to match the roll.
-
   const newImg = "images/numbers/" + result + ".png";
 
   twelveDie.src = newImg;
 
+  //This line of code will update our mode object, with the data from this roll.
+  mode12[result] === undefined ? (mode12[result] = 1) : mode12[result]++;
+
   //Update the mean, median and mode results.
   d12Mean.innerText = mean(twelves).toFixed(2);
   d12Median.innerText = median(twelves);
+  d12Mode.innerText = mode(mode12);
 }
 
 function rollTwenty() {
-  //This section gets the roll, console logs it, and pushes it to our array.
-
+  //This section gets the roll and pushes it to our array.
   result = getRandomNumber(20);
-  console.log("Your roll of the 20 die is,", result);
-
   twenties.push(result);
-  console.log(twenties);
 
   //Change the die image to match the roll.
-
   const newImg = "images/numbers/" + result + ".png";
 
   twentyDie.src = newImg;
 
+  //This line of code will update our mode object, with the data from this roll.
+  mode20[result] === undefined ? (mode20[result] = 1) : mode20[result]++;
+
   //Update the mean, median and mode results.
   d20Mean.innerText = mean(twenties).toFixed(2);
   d20Median.innerText = median(twenties);
+  d20Mode.innerText = mode(mode20);
 }
 
 /****************
@@ -308,29 +268,32 @@ function median(arr) {
 }
 
 function mode(modeObj) {
+  //The tempArr is the output; this is where I store the current 'highest' count we have so far.
   let tempArr = [];
-  let tempValue = 3;
+  let tempValue = 0;
 
+  //Iterate through the object's properties, one at a time.
   for (prop in modeObj) {
-    // console.log(tempArr);
+    //Set a variable for whatver the value of the current property is.
     let value = modeObj[prop];
-    let tempProp = prop;
 
+    //Because mode can have multiple potential values, we need to use an array to store the data.
+    if (value === tempValue) {
+      tempArr.push(prop);
+    }
 
+    //If we come across a new 'high value' in our search, we clear the array and the current prop becomes
+    //the new high value.
     if (value > tempValue) {
-      console.log(value, 'is greater than', tempValue);
+      tempValue = value;
+      tempArr = [];
+      tempArr.push(prop);
     }
 
     if (value < tempValue) {
-      console.log(value, 'is less than', tempValue);
+      continue;
     }
+  }
 
-    if (value === tempValue) {
-      console.log(value, 'is EQUAL to', tempValue);
-    }
-
-
-}
-
-
+  return tempArr;
 }
